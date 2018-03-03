@@ -1,30 +1,30 @@
 version: '2'
 
 services:
-  postgresql:
-    image: sameersbn/postgresql:9.6-2
+  mysql:
+    image: sameersbn/mysql:latest
     environment:
     - DB_USER=redmine
     - DB_PASS=password
     - DB_NAME=redmine_production
     volumes:
-    - /srv/docker/redmine/postgresql:/var/lib/postgresql
+    - ./mysql:/var/lib/mysql
 
   redmine:
     image: sameersbn/redmine:3.4.4-2
     depends_on:
-    - postgresql
+    - mysql
     environment:
     - TZ=Asia/Kolkata
 
-    - DB_ADAPTER=postgresql
-    - DB_HOST=postgresql
-    - DB_PORT=5432
+    - DB_ADAPTER=mysql2
+    - DB_HOST=mysql
+    - DB_PORT=3306
     - DB_USER=redmine
     - DB_PASS=password
     - DB_NAME=redmine_production
 
-    - REDMINE_PORT=10083
+    # - REDMINE_PORT=10083
     - REDMINE_HTTPS=false
     - REDMINE_RELATIVE_URL_ROOT=
     - REDMINE_SECRET_TOKEN=
@@ -57,6 +57,6 @@ services:
     - IMAP_INTERVAL=30
 
     ports:
-    - "10083:80"
+    - "80:80"
     volumes:
-    - /srv/docker/redmine/redmine:/home/redmine/data
+    - ./redmine:/home/redmine/data
