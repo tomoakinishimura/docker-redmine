@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  redmine:
+    image: 368463433001.dkr.ecr.ap-northeast-1.amazonaws.com/redmine
+    env_file: .env
+    ports:
+    - "80:80"
+    volumes:
+    - /srv/docker/redmine/redmine:/home/redmine/data
